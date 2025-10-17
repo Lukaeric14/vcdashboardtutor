@@ -9,11 +9,13 @@ import InputPanel from './InputPanel'
 import PracticeMode from './PracticeMode'
 import ProgressTracker from './ProgressTracker'
 import FundSelector from './FundSelector'
+import CapitalFlowTable from './CapitalFlowTable'
 
 export default function Dashboard() {
   const [fundData, setFundData] = useState<FundData>(getDefaultFundData())
   const [showInputPanel, setShowInputPanel] = useState(true)
   const [showPracticeMode, setShowPracticeMode] = useState(false)
+  const [showCapitalFlowTable, setShowCapitalFlowTable] = useState(false)
   const [progressKey, setProgressKey] = useState(0)
 
   const handleProgressUpdate = (correct: boolean) => {
@@ -83,6 +85,12 @@ export default function Dashboard() {
           >
             {showInputPanel ? 'Hide' : 'Show'} Input Panel
           </button>
+          <button
+            onClick={() => setShowCapitalFlowTable(!showCapitalFlowTable)}
+            className="px-4 py-2 text-sm font-medium text-white bg-teal-600 rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
+          >
+            {showCapitalFlowTable ? 'Hide' : 'Show'} Capital Flow
+          </button>
           <FundSelector onSelectFund={setFundData} />
           <button
             onClick={() => setShowPracticeMode(true)}
@@ -113,6 +121,11 @@ export default function Dashboard() {
           onUpdate={setFundData}
           onReset={handleReset}
         />
+      )}
+
+      {/* Capital Flow Table */}
+      {showCapitalFlowTable && (
+        <CapitalFlowTable fundData={fundData} />
       )}
 
       {/* Fund-Level Metrics */}
